@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 @Entity
 public class Task {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -13,11 +14,23 @@ public class Task {
 
     private String description;
 
-    private String type;
+    @Enumerated(EnumType.STRING)
+    private TaskType type;
 
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private TaskStatus status;
 
     private LocalDateTime createdOn;
+
+    public Task() {}
+
+    public Task(String title, String description, TaskType type, TaskStatus status, LocalDateTime createdOn) {
+        this.title = title;
+        this.description = description;
+        this.type = type;
+        this.status = status;
+        this.createdOn = createdOn;
+    }
 
     public Long getId() {
         return id;
@@ -43,19 +56,19 @@ public class Task {
         this.description = description;
     }
 
-    public String getType() {
+    public TaskType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(TaskType type) {
         this.type = type;
     }
 
-    public String getStatus() {
+    public TaskStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(TaskStatus status) {
         this.status = status;
     }
 
@@ -66,15 +79,4 @@ public class Task {
     public void setCreatedOn(LocalDateTime createdOn) {
         this.createdOn = createdOn;
     }
-
-    public Task() {}
-
-    public Task(String title, String description, String type, String status, LocalDateTime createdOn) {
-        this.title = title;
-        this.description = description;
-        this.type = type;
-        this.status = status;
-        this.createdOn = createdOn;
-    }
-
 }
