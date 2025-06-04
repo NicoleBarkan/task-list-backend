@@ -4,6 +4,7 @@ import com.tasklist.taskapi.model.Task;
 import com.tasklist.taskapi.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +22,9 @@ public class TaskService {
     }
 
     public Task addTask(Task task) {
+        if (task.getCreatedOn() == null) {
+            task.setCreatedOn(LocalDateTime.now());
+        }
         return taskRepository.save(task);
     }
 
