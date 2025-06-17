@@ -35,4 +35,14 @@ public class TaskService {
     public Optional<Task> getTaskById(Long id) {
         return taskRepository.findById(id);
     }
+
+    public Optional<Task> updateTask(Long id, Task updatedTask) {
+        return taskRepository.findById(id).map(existingTask -> {
+            existingTask.setTitle(updatedTask.getTitle());
+            existingTask.setDescription(updatedTask.getDescription());
+            existingTask.setType(updatedTask.getType());
+            existingTask.setStatus(updatedTask.getStatus());
+            return taskRepository.save(existingTask);
+        });
+    }
 }
