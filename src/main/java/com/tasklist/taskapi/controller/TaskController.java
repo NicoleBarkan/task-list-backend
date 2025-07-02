@@ -25,6 +25,17 @@ public class TaskController {
         return taskService.addTask(task);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody Task updatedTask) {
+        return taskService.getTaskById(id)
+            .map(existingTask -> {
+                updatedTask.setId(id);
+                Task savedTask = taskService.updateTask(updatedTask);
+                return ResponseEntity.ok(savedTask);
+            })
+            .orElse(ResponseEntity.notFound().build());
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Task> getTaskById(@PathVariable Long id) {
         return taskService.getTaskById(id)
