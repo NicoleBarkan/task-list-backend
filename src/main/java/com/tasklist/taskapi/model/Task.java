@@ -22,6 +22,8 @@ public class Task {
 
     private LocalDateTime createdOn;
 
+    private LocalDateTime updatedOn;
+
     public Task() {}
 
     public Task(String title, String description, TaskType type, TaskStatus status, LocalDateTime createdOn) {
@@ -78,5 +80,13 @@ public class Task {
 
     public void setCreatedOn(LocalDateTime createdOn) {
         this.createdOn = createdOn;
+    }
+
+    public LocalDateTime getUpdatedOn() {
+        return updatedOn;
+    }
+
+    public void setUpdatedOn(LocalDateTime updatedOn) {
+        this.updatedOn = updatedOn;
     }
 }

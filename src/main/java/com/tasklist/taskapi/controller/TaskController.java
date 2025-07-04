@@ -2,9 +2,8 @@ package com.tasklist.taskapi.controller;
 
 import com.tasklist.taskapi.model.Task;
 import com.tasklist.taskapi.service.TaskService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -12,8 +11,11 @@ import java.util.List;
 @RequestMapping("/api/tasks")
 public class TaskController {
 
-    @Autowired
-    private TaskService taskService;
+    private final TaskService taskService;
+
+    public TaskController(TaskService taskService) {
+        this.taskService = taskService;
+    }
 
     @GetMapping
     public List<Task> getTasks() {
@@ -30,6 +32,8 @@ public class TaskController {
         return taskService.getTaskById(id)
             .map(existingTask -> {
                 updatedTask.setId(id);
+                updatedTask.setCreatedOn(existingTask.getCreatedOn());
+                updatedTask.setUpdatedOn(java.time.LocalDateTime.now()); 
                 Task savedTask = taskService.updateTask(updatedTask);
                 return ResponseEntity.ok(savedTask);
             })
