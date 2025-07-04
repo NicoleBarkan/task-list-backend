@@ -24,6 +24,7 @@ public class TaskController {
 
     @PostMapping
     public Task createTask(@RequestBody Task task) {
+        System.out.println("Received: " + task);
         return taskService.addTask(task);
     }
 
@@ -47,11 +48,19 @@ public class TaskController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody Task updatedTask) {
+        return taskService.updateTask(id, updatedTask)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
+    public ResponseEntity<List<Task>> deleteTask(@PathVariable Long id) {
         if (taskService.getTaskById(id).isPresent()) {
             taskService.deleteTask(id);
-            return ResponseEntity.noContent().build();
+            List<Task> updatedTasks = taskService.getTasks();
+            return ResponseEntity.ok(updatedTasks);
         } else {
             return ResponseEntity.notFound().build();
         }
