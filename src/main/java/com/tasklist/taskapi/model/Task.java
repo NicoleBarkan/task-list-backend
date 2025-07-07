@@ -6,6 +6,8 @@ import java.time.LocalDateTime;
 @Entity
 public class Task {
 
+    public static final long UNASSIGNED = -1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,6 +26,9 @@ public class Task {
 
     private LocalDateTime updatedOn;
 
+    @Column(name = "assigned_to")
+    private Long assignedTo = UNASSIGNED;
+
     public Task() {}
 
     public Task(String title, String description, TaskType type, TaskStatus status, LocalDateTime createdOn) {
@@ -32,6 +37,7 @@ public class Task {
         this.type = type;
         this.status = status;
         this.createdOn = createdOn;
+        this.assignedTo = UNASSIGNED;
     }
 
     public Long getId() {
@@ -88,5 +94,13 @@ public class Task {
 
     public void setUpdatedOn(LocalDateTime updatedOn) {
         this.updatedOn = updatedOn;
+    }
+
+    public Long getAssignedTo() {
+        return assignedTo;
+    }
+
+    public void setAssignedTo(Long assignedTo) {
+        this.assignedTo = assignedTo;
     }
 }
