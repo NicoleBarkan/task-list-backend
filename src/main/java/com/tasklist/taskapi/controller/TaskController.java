@@ -30,27 +30,14 @@ public class TaskController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody Task updatedTask) {
-        return taskService.getTaskById(id)
-            .map(existingTask -> {
-                updatedTask.setId(id);
-                updatedTask.setCreatedOn(existingTask.getCreatedOn());
-                updatedTask.setUpdatedOn(java.time.LocalDateTime.now()); 
-                Task savedTask = taskService.updateTask(updatedTask);
-                return ResponseEntity.ok(savedTask);
-            })
-            .orElse(ResponseEntity.notFound().build());
+        return taskService.updateTask(id, updatedTask)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Task> getTaskById(@PathVariable Long id) {
         return taskService.getTaskById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody Task updatedTask) {
-        return taskService.updateTask(id, updatedTask)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
