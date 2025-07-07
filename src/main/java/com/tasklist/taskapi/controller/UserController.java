@@ -1,7 +1,7 @@
 package com.tasklist.taskapi.controller;
 
 import com.tasklist.taskapi.model.User;
-import com.tasklist.taskapi.repository.UserRepository;
+import com.tasklist.taskapi.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,14 +10,14 @@ import java.util.List;
 @RequestMapping("/api/users")
 @CrossOrigin
 public class UserController {
-    private final UserRepository userRepository;
+    private final UserService userService;
 
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping
     public List<User> getAllUsers() {
-        return userRepository.findAll();
+        return userService.getAllUsers();
     }
 }
