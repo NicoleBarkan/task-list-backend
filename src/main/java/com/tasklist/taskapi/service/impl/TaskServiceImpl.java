@@ -41,7 +41,7 @@ public class TaskServiceImpl implements TaskService {
         existingTask.setDescription(task.getDescription());
         existingTask.setType(task.getType());
         existingTask.setStatus(task.getStatus());
-        existingTask.setUpdatedOn(LocalDateTime.now());
+        existingTask.setAssignedTo(task.getAssignedTo());
 
         return taskRepository.save(existingTask);
     }
@@ -53,6 +53,7 @@ public class TaskServiceImpl implements TaskService {
             existingTask.setDescription(updatedTask.getDescription());
             existingTask.setType(updatedTask.getType());
             existingTask.setStatus(updatedTask.getStatus());
+            existingTask.setAssignedTo(updatedTask.getAssignedTo());
             existingTask.setUpdatedOn(LocalDateTime.now());
             return taskRepository.save(existingTask);
         });
