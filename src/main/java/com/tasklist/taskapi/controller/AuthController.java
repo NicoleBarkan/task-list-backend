@@ -1,7 +1,7 @@
 package com.tasklist.taskapi.controller;
 
 import com.tasklist.taskapi.dto.LoginRequest;
-import com.tasklist.taskapi.dto.RegisterRequest;
+import com.tasklist.taskapi.dto.RegisterRequestDto;
 import com.tasklist.taskapi.model.User;
 import com.tasklist.taskapi.repository.UserRepository;
 
@@ -43,7 +43,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
+    public ResponseEntity<?> register(@RequestBody RegisterRequestDto request) {
         if (userRepository.findByUsername(request.username).isPresent()) {
             return ResponseEntity.badRequest().body(Map.of("message", "Username already taken. Choose another one."));
         }
