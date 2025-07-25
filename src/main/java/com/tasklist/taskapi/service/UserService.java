@@ -7,4 +7,5 @@ import java.util.Optional;
 public interface UserService {
     List<User> getAllUsers();
     Optional<User> getUserById(Long id);
+    void saveUser(User user);
 }
