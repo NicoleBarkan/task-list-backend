@@ -38,6 +38,7 @@ public class AuthController {
         response.put("userId", user.getId());
         response.put("firstName", user.getFirstName());
         response.put("lastName", user.getLastName());
+        response.put("role", user.getRole());
 
         return ResponseEntity.ok(response);
     }
@@ -61,7 +62,13 @@ public class AuthController {
     @GetMapping("/user/{id}")
     public ResponseEntity<?> getUserDetails(@PathVariable Long id) {
         return userRepository.findById(id)
-            .map(user -> Map.of("firstName", user.getFirstName(), "lastName", user.getLastName()))
+            .map(user -> Map.of(
+                "id", user.getId(),
+                "firstName", user.getFirstName(),
+                "lastName", user.getLastName(),
+                "username", user.getUsername(),
+                "role", user.getRole()
+            ))
             .map(ResponseEntity::ok)
             .orElse(ResponseEntity.notFound().build());
     }
