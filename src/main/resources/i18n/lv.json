@@ -1,0 +1,108 @@
+{
+  "APP": {
+    "LANGUAGE": "Valoda"
+  },
+  "LOGIN": {
+    "TITLE": "Pieslēgties",
+    "USERNAME_LABEL": "Lietotājvārds",
+    "USERNAME_PLACEHOLDER": "Ievadiet lietotājvārdu",
+    "USERNAME_REQUIRED": "Lietotājvārds ir obligāts",
+    "PASSWORD_LABEL": "Parole",
+    "PASSWORD_PLACEHOLDER": "Ievadiet paroli",
+    "PASSWORD_REQUIRED": "Parole ir obligāta",
+    "SUBMIT_BUTTON": "Pieslēgties",
+    "REGISTER_LINK": "Nav konta? Reģistrējies"
+  },
+  "CREATE": {
+    "FORM": {
+      "CREATE": "Izveidot uzdevumu",
+      "UPDATE": "Rediģēt uzdevumu",
+      "TITLE_LABEL": "Uzdevuma nosaukums",
+      "TITLE_PLACEHOLDER": "Ievadiet uzdevuma nosaukumu",
+      "DESCRIPTION_LABEL": "Uzdevuma apraksts (nav obligāti)",
+      "DESCRIPTION_PLACEHOLDER": "Ievadiet uzdevuma aprakstu",
+      "ASSIGNED_TO": "Piešķirts",
+      "UNASSIGNED": "Nav piešķirts",
+      "TYPE": "Uzdevuma tips",
+      "STATUS": "Uzdevuma statuss",
+      "CANCEL": "Atcelt",
+      "SAVE": "Saglabāt uzdevumu",
+      "ERRORS": {
+        "TITLE_REQUIRED": "Nosaukums ir obligāts",
+        "TITLE_MINLENGTH": "Minimāli 4 rakstzīmes",
+        "TITLE_MAXLENGTH": "Maksimāli 50 rakstzīmes",
+        "DESCRIPTION_MAXLENGTH": "Maksimāli 200 rakstzīmes",
+        "TYPE_REQUIRED": "Tips ir obligāts",
+        "STATUS_REQUIRED": "Statuss ir obligāts"
+      }
+    },
+    "TYPES": {
+      "EPIC": "Epika",
+      "STORY": "Stāsts",
+      "TASK": "Uzdevums",
+      "SUBTASK": "Apakšuzdevums",
+      "BUG": "Kļūda"
+    },
+    "STATUS": {
+      "OPEN": "Atvērts",
+      "IN_PROGRESS": "Procesā",
+      "DONE": "Pabeigts"
+    }
+  },
+  "REGISTER": {
+    "TITLE": "Reģistrēties",
+    "FIRST_NAME": "Vārds",
+    "LAST_NAME": "Uzvārds",
+    "USERNAME": "Lietotājvārds",
+    "PASSWORD": "Parole",
+    "PLACEHOLDER": {
+      "FIRST_NAME": "Ievadiet savu vārdu",
+      "LAST_NAME": "Ievadiet savu uzvārdu",
+      "USERNAME": "Izvēlieties lietotājvārdu",
+      "PASSWORD": "Izvēlieties paroli"
+    },
+    "ERRORS": {
+      "FIRST_NAME_REQUIRED": "Vārds ir obligāts",
+      "LAST_NAME_REQUIRED": "Uzvārds ir obligāts",
+      "USERNAME_REQUIRED": "Lietotājvārds ir obligāts",
+      "PASSWORD_REQUIRED": "Parole ir obligāta",
+      "PASSWORD_MINLENGTH": "Parolei jābūt vismaz 6 rakstzīmēm"
+    },
+    "SUBMIT": "Reģistrēties"
+  },
+  "TASK": {
+    "DETAILS": {
+      "DESCRIPTION": "Apraksts",
+      "NO_DESCRIPTION": "Apraksts nav pieejams.",
+      "ASSIGNED_TO": "Piešķirts",
+      "ASSIGNED_LABEL": "Piešķirts lietotājs",
+      "SELECT_USER": "Izvēlieties lietotāju",
+      "UNASSIGNED": "Nav piešķirts",
+      "DATES": "Datumi",
+      "CREATED": "Izveidots",
+      "UPDATED": "Atjaunināts",
+      "BACK": "Atpakaļ uz sarakstu",
+      "NOT_FOUND": "Uzdevums nav atrasts."
+    }
+  },
+  "TASK_LIST": {
+    "GREETING": "Sveicināts",
+    "LOGOUT": "Iziet",
+    "CREATE": "Jauns Uzdevums",
+    "VIEW_USERS": "Lietotāji",
+    "EDIT": "Rediģēt",
+    "DELETE": "Dzēst",
+    "NO_DESCRIPTION": "Apraksts nav pieejams."
+  },
+  "USER_DETAILS": {
+    "ROLES": "Lomas",
+    "BACK": "Atpakaļ uz sarakstu",
+    "SAVE": "Saglabāt",
+    "NOT_FOUND": "Lietotājs nav atrasts."
+  },
+  "USER_LIST": {
+    "TITLE": "Lietotāji",
+    "BACK_TO_TASKS": "Atpakaļ uz Uzdevuma Sarakstu",
+    "VIEW_DETAILS": "Skatīt detaļas"
+  }
+}
