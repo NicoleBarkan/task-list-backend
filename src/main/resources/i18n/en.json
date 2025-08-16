@@ -1,0 +1,109 @@
+{
+  "APP": {
+    "LANGUAGE": "Language"
+  },
+  "LOGIN": {
+    "TITLE": "Login",
+    "USERNAME_LABEL": "Username",
+    "USERNAME_PLACEHOLDER": "Enter your username",
+    "USERNAME_REQUIRED": "Username is required",
+    "PASSWORD_LABEL": "Password",
+    "PASSWORD_PLACEHOLDER": "Enter your password",
+    "PASSWORD_REQUIRED": "Password is required",
+    "SUBMIT_BUTTON": "Login",
+    "REGISTER_LINK": "Don't have an account? Register"
+  },
+  "CREATE": {
+    "FORM": {
+      "CREATE": "Create Task",
+      "UPDATE": "Update Task",
+      "TITLE_LABEL": "Task Title",
+      "TITLE_PLACEHOLDER": "Enter task title",
+      "DESCRIPTION_LABEL": "Task Description (Optional)",
+      "DESCRIPTION_PLACEHOLDER": "Enter task description",
+      "ASSIGNED_TO": "Assign To",
+      "UNASSIGNED": "Unassigned",
+      "TYPE": "Task Type",
+      "STATUS": "Task Status",
+      "CANCEL": "Cancel",
+      "SAVE": "Save Task",
+      "ERRORS": {
+        "TITLE_REQUIRED": "Title is required",
+        "TITLE_MINLENGTH": "Minimum 4 characters required",
+        "TITLE_MAXLENGTH": "Maximum 50 characters allowed",
+        "DESCRIPTION_MAXLENGTH": "Maximum 200 characters allowed",
+        "TYPE_REQUIRED": "Type is required",
+        "STATUS_REQUIRED": "Status is required"
+      }
+    },
+    "TYPES": {
+      "EPIC": "Epic",
+      "STORY": "Story",
+      "TASK": "Task",
+      "SUBTASK": "Subtask",
+      "BUG": "Bug"
+    },
+    "STATUS": {
+      "OPEN": "Open",
+      "IN_PROGRESS": "In Progress",
+      "DONE": "Done"
+    }
+  },
+  "REGISTER": {
+    "TITLE": "Register",
+    "FIRST_NAME": "First name",
+    "LAST_NAME": "Last name",
+    "USERNAME": "Username",
+    "PASSWORD": "Password",
+    "PLACEHOLDER": {
+      "FIRST_NAME": "Enter your first name",
+      "LAST_NAME": "Enter your last name",
+      "USERNAME": "Choose a username",
+      "PASSWORD": "Choose a password"
+    },
+    "ERRORS": {
+      "FIRST_NAME_REQUIRED": "First name is required",
+      "LAST_NAME_REQUIRED": "Last name is required",
+      "USERNAME_REQUIRED": "Username is required",
+      "PASSWORD_REQUIRED": "Password is required",
+      "PASSWORD_MINLENGTH": "Password must be at least 6 characters"
+    },
+    "SUBMIT": "Register"
+  },
+  "TASK": {
+    "DETAILS": {
+      "DESCRIPTION": "Description",
+      "NO_DESCRIPTION": "No description provided.",
+      "ASSIGNED_TO": "Assigned To",
+      "ASSIGNED_LABEL": "Assigned to",
+      "SELECT_USER": "Select User",
+      "UNASSIGNED": "Unassigned",
+      "DATES": "Dates",
+      "CREATED": "Created",
+      "UPDATED": "Updated",
+      "BACK": "Back to List",
+      "NOT_FOUND": "Task not found."
+    }
+  },
+  "TASK_LIST": {
+    "GREETING": "Welcome",
+    "LOGOUT": "Logout",
+    "CREATE": "Create New Task",
+    "VIEW_USERS": "View Users",
+    "EDIT": "Edit",
+    "DELETE": "Delete",
+    "NO_DESCRIPTION": "No description provided."
+  },
+  "USER_DETAILS": {
+    "ROLES": "Roles",
+    "BACK": "Back to List",
+    "SAVE": "Save",
+    "NOT_FOUND": "User not found."
+  },
+  "USER_LIST": {
+    "TITLE": "Users",
+    "BACK_TO_TASKS": "Back to Task List",
+    "VIEW_DETAILS": "View Details"
+  }
+
+}
