@@ -4,6 +4,7 @@ import com.tasklist.taskapi.dto.LoginRequestDto;
 import com.tasklist.taskapi.dto.RegisterRequestDto;
 import com.tasklist.taskapi.model.User;
 import com.tasklist.taskapi.repository.UserRepository;
+import com.tasklist.taskapi.service.UserService;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,10 +17,12 @@ import java.util.*;
 public class AuthController {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final UserService userService;
 
-    public AuthController(UserRepository userRepository, PasswordEncoder passwordEncoder ) {
+    public AuthController(UserRepository userRepository, PasswordEncoder passwordEncoder,  UserService userService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.userService = userService;
     }
 
     @PostMapping("/login")
@@ -51,12 +54,19 @@ public class AuthController {
 
         User newUser = new User();
         newUser.setUsername(request.username);
-        newUser.setPassword(passwordEncoder.encode(request.password));
+        newUser.setPassword(request.password);
         newUser.setFirstName(request.firstName);
         newUser.setLastName(request.lastName);
-        userRepository.save(newUser);
 
-        return ResponseEntity.ok().build();
+        User saved = userService.registerUser(newUser);
+
+        return ResponseEntity.status(201).body(Map.of(
+            "id", saved.getId(),
+            "username", saved.getUsername(),
+            "firstName", saved.getFirstName(),
+            "lastName", saved.getLastName(),
+            "role", saved.getRole()
+        ));
     }
 
     @GetMapping("/user/{id}")
