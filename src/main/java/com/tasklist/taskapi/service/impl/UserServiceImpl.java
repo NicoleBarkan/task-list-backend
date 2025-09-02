@@ -1,6 +1,7 @@
 package com.tasklist.taskapi.service.impl;
 
 import com.tasklist.taskapi.model.User;
+import com.tasklist.taskapi.dto.RegisterRequestDto;
 import com.tasklist.taskapi.model.Role;
 import com.tasklist.taskapi.repository.UserRepository;
 import com.tasklist.taskapi.service.UserService;
@@ -40,13 +41,28 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User registerUser(User user) {
+    public User registerUser(RegisterRequestDto request) {
+        String username = request.username == null ? "" : request.username.trim();
+        String firstName = request.firstName == null ? "" : request.firstName.trim();
+        String lastName  = request.lastName == null ? "" : request.lastName.trim();
+
+        if (username.isEmpty()) {
+            throw new IllegalArgumentException("Username must not be blank");
+        }
+        if (userRepository.findByUsernameIgnoreCase(username).isPresent()) {
+            throw new IllegalArgumentException("Username already taken. Choose another one.");
+        }
+
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(passwordEncoder.encode(request.password));
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+
         if (user.getRole() == null) {
             user.setRole(new HashSet<>()); 
         }
         user.getRole().add(Role.USER); 
-
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         return userRepository.save(user);
     }

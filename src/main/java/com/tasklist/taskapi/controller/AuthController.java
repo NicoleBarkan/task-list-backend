@@ -27,38 +27,36 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequestDto request) {
-        Optional<User> userOpt = userRepository.findByUsername(request.getUsername());
-        if (userOpt.isEmpty()) {
+        String username = Optional.ofNullable(request.getUsername())
+                                .map(String::trim)
+                                .orElse("");
+        String rawPassword = request.getPassword();
+
+        Optional<User> userOpt = username.isEmpty()
+            ? Optional.empty()
+            : userRepository.findByUsernameIgnoreCase(username);
+
+        if (userOpt.isEmpty() || rawPassword == null ||
+            !passwordEncoder.matches(rawPassword, userOpt.get().getPassword())) {
             throw new IllegalArgumentException("Invalid username or password");
         }
 
         User user = userOpt.get();
-        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            throw new IllegalArgumentException("Invalid username or password");
-        }
-
-        Map<String, Object> response = new HashMap<>();
-        response.put("userId", user.getId());
-        response.put("firstName", user.getFirstName());
-        response.put("lastName", user.getLastName());
-        response.put("role", user.getRole());
-
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(Map.of(
+            "userId", user.getId(),
+            "firstName", user.getFirstName(),
+            "lastName", user.getLastName(),
+            "role", user.getRole()
+        ));
     }
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequestDto request) {
-        if (userRepository.findByUsername(request.username).isPresent()) {
+        if (userRepository.findByUsernameIgnoreCase(request.username).isPresent()) {
             throw new IllegalArgumentException("Username already taken. Choose another one.");
         }
 
-        User newUser = new User();
-        newUser.setUsername(request.username);
-        newUser.setPassword(request.password);
-        newUser.setFirstName(request.firstName);
-        newUser.setLastName(request.lastName);
-
-        User saved = userService.registerUser(newUser);
+        User saved = userService.registerUser(request);
 
         return ResponseEntity.status(201).body(Map.of(
             "id", saved.getId(),
