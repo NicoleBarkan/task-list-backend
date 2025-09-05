@@ -92,7 +92,8 @@
     "VIEW_USERS": "View Users",
     "EDIT": "Edit",
     "DELETE": "Delete",
-    "NO_DESCRIPTION": "No description provided."
+    "NO_DESCRIPTION": "No description provided.",
+    "NO_TASKS": "There is no tasks yet"
   },
   "USER_DETAILS": {
     "ROLES": "Roles",

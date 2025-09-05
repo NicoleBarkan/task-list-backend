@@ -92,7 +92,8 @@
     "VIEW_USERS": "Lietotāji",
     "EDIT": "Rediģēt",
     "DELETE": "Dzēst",
-    "NO_DESCRIPTION": "Apraksts nav pieejams."
+    "NO_DESCRIPTION": "Apraksts nav pieejams.",
+    "NO_TASKS": "Vēl nav neviena uzdevuma"
   },
   "USER_DETAILS": {
     "ROLES": "Lomas",
