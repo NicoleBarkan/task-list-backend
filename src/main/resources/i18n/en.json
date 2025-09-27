@@ -23,6 +23,7 @@
       "DESCRIPTION_PLACEHOLDER": "Enter task description",
       "ASSIGNED_TO": "Assign To",
       "UNASSIGNED": "Unassigned",
+      "GROUP": "Group",
       "TYPE": "Task Type",
       "STATUS": "Task Status",
       "CANCEL": "Cancel",
@@ -33,7 +34,8 @@
         "TITLE_MAXLENGTH": "Maximum 50 characters allowed",
         "DESCRIPTION_MAXLENGTH": "Maximum 200 characters allowed",
         "TYPE_REQUIRED": "Type is required",
-        "STATUS_REQUIRED": "Status is required"
+        "STATUS_REQUIRED": "Status is required",
+        "GROUP_REQUIRED": "Group is required"
       }
     },
     "TYPES": {
@@ -78,6 +80,7 @@
       "ASSIGNED_LABEL": "Assigned to",
       "SELECT_USER": "Select User",
       "UNASSIGNED": "Unassigned",
+      "GROUP": "Group",
       "DATES": "Dates",
       "CREATED": "Created",
       "UPDATED": "Updated",
@@ -90,6 +93,7 @@
     "LOGOUT": "Logout",
     "CREATE": "Create New Task",
     "VIEW_USERS": "View Users",
+    "GROUPS": "Groups",
     "EDIT": "Edit",
     "DELETE": "Delete",
     "NO_DESCRIPTION": "No description provided.",
@@ -103,8 +107,58 @@
   },
   "USER_LIST": {
     "TITLE": "Users",
-    "BACK_TO_TASKS": "Back to Task List",
-    "VIEW_DETAILS": "View Details"
+    "BACK_TO_TASKS": "Back to tasks",
+    "VIEW_DETAILS": "View details",
+    "CURRENT_GROUP": "Group",
+    "CHANGE_GROUP": "Assign to group"
+  },
+  "GROUP_LIST": {
+    "TITLE": "Groups",
+    "CREATE": "New Group",
+    "FILTER": "Filter",
+    "SEARCH_PLACEHOLDER": "Search by title/description",
+    "EDIT": "Edit",
+    "DELETE": "Delete",
+    "NO_DESCRIPTION": "No description provided."
+  },
+  "GROUP_EDIT": {
+    "NAME": "Name",
+    "DESCRIPTION": "Description",
+    "CREATE": "Create Group",
+    "EDIT": "Edit Group",
+    "CREATE_NEW": "Create",
+    "SAVE": "Save",
+    "CANCEL": "Cancel",
+    "ERRORS": {
+      "REQUIRED_NAME": "Please enter a name",
+      "NAME_TOO_LONG": "Name is too long",
+      "DESC_TOO_LONG": "Description is too long"
+    }
+  },
+  "GROUP_DETAILS": {
+    "BACK": "Back to groups",
+    "NAME": "Group name",
+    "DESCRIPTION": "Description",
+    "NO_DESCRIPTION": "No description provided",
+    "TASKS_TITLE": "Tasks in this group",
+    "USERS_TITLE": "Users in this group",
+    "NO_TASKS": "No tasks found in this group"
+  },
+    "USERS": {
+    "IN_GROUP_TITLE": "Users in this group",
+    "USERNAME": "Username",
+    "FIRSTNAME": "Name",
+    "LASTNAME": "Surname",
+    "ROLES": "Roles",
+    "NO_USERS": "No users in this group"
+  },
+  "TASKS": {
+    "TITLE": "Title",
+    "TYPE": "Type",
+    "STATUS": "Status",
+    "ASSIGNED_TO": "Assigned to",
+    "UPDATED_ON": "Last updated"
   }
 
 }
+

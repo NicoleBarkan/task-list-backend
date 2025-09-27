@@ -31,3 +31,14 @@ build/
 
 ### VS Code ###
 .vscode/
+node_modules/
+target/
+.dist/
+dist/
+build/
+.out/
+.idea/
+.vscode/
+*.iml
+*.log
+.DS_Store

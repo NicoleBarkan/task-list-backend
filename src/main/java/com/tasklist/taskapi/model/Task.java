@@ -22,12 +22,30 @@ public class Task {
     @Enumerated(EnumType.STRING)
     private TaskStatus status;
 
+    @Column(nullable = false, updatable = false)
     private LocalDateTime createdOn;
 
+    @Column(nullable = true)
     private LocalDateTime updatedOn;
+
+    @PrePersist
+    void onCreate() {
+        if (this.createdOn == null) {
+            this.createdOn = LocalDateTime.now();
+        }
+    }
+
+    @PreUpdate
+    void onUpdate() {
+        this.updatedOn = LocalDateTime.now();
+    }
 
     @Column(name = "assigned_to")
     private Long assignedTo = UNASSIGNED;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "group_id", nullable = false)
+    private Group group;
 
     public Task() {}
 
@@ -36,7 +54,6 @@ public class Task {
         this.description = description;
         this.type = type;
         this.status = status;
-        this.createdOn = createdOn;
         this.assignedTo = UNASSIGNED;
     }
 
@@ -102,5 +119,13 @@ public class Task {
 
     public void setAssignedTo(Long assignedTo) {
         this.assignedTo = assignedTo;
+    }
+    
+    public Group getGroup() { 
+        return group; 
+    }
+
+    public void setGroup(Group group) { 
+        this.group = group; 
     }
 }

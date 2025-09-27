@@ -4,6 +4,7 @@ import com.tasklist.taskapi.dto.LoginRequestDto;
 import com.tasklist.taskapi.dto.RegisterRequestDto;
 import com.tasklist.taskapi.model.User;
 import com.tasklist.taskapi.repository.UserRepository;
+import com.tasklist.taskapi.service.JwtService;
 import com.tasklist.taskapi.service.UserService;
 
 import org.springframework.http.ResponseEntity;
@@ -18,37 +19,41 @@ public class AuthController {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserService userService;
+    private final JwtService jwtService;
 
-    public AuthController(UserRepository userRepository, PasswordEncoder passwordEncoder,  UserService userService) {
+    public AuthController(UserRepository userRepository, PasswordEncoder passwordEncoder,  UserService userService, JwtService jwtService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.userService = userService;
+        this.jwtService = jwtService;
     }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequestDto request) {
         String username = Optional.ofNullable(request.getUsername())
-                                .map(String::trim)
-                                .orElse("");
+                .map(String::trim)
+                .orElse("");
         String rawPassword = request.getPassword();
 
-        Optional<User> userOpt = username.isEmpty()
-            ? Optional.empty()
-            : userRepository.findByUsernameIgnoreCase(username);
+        User user = username.isEmpty()
+                ? null
+                : userRepository.findByUsernameIgnoreCase(username).orElse(null);
 
-        if (userOpt.isEmpty() || rawPassword == null ||
-            !passwordEncoder.matches(rawPassword, userOpt.get().getPassword())) {
+        if (user == null || rawPassword == null || !passwordEncoder.matches(rawPassword, user.getPassword())) {
             throw new IllegalArgumentException("Invalid username or password");
         }
 
-        User user = userOpt.get();
+        String token = jwtService.generate(user); 
+
         return ResponseEntity.ok(Map.of(
-            "userId", user.getId(),
-            "firstName", user.getFirstName(),
-            "lastName", user.getLastName(),
-            "role", user.getRole()
+                "token", token,
+                "userId", user.getId(),
+                "firstName", user.getFirstName(),
+                "lastName", user.getLastName(),
+                "role", user.getRole()      
         ));
     }
+
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequestDto request) {

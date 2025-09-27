@@ -7,7 +7,12 @@ import java.util.Optional;
 
 public interface UserService {
     List<User> getAllUsers();
+    List<User> getUsersByGroupId(Long groupId);  
     Optional<User> getUserById(Long id);
-    void saveUser(User user);
+    User saveUser(User user);
     User registerUser(RegisterRequestDto request);
+    Optional<User> findByUsername(String username);
+    Optional<User> assignGroup(Long userId, Long groupId);
+    void encodeAndSetPassword(User user, String rawPassword);
+    void deleteUserById(Long id);
 }
