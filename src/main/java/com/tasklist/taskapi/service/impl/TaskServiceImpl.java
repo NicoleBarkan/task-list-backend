@@ -8,12 +8,11 @@ import com.tasklist.taskapi.repository.UserRepository;
 import com.tasklist.taskapi.service.TaskService;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import static com.tasklist.taskapi.security.SecurityUtils.hasAnyRole;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -29,19 +28,6 @@ public class TaskServiceImpl implements TaskService {
     public TaskServiceImpl(TaskRepository taskRepository, UserRepository userRepository) {
         this.taskRepository = taskRepository;
         this.userRepository = userRepository;
-    }
-
-    private boolean hasAnyRole(Authentication auth, String... roles) {
-        if (auth == null) return false;
-        Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
-        if (authorities == null) return false;
-        for (String role : roles) {
-            String full = role.startsWith("ROLE_") ? role : "ROLE_" + role;
-            for (GrantedAuthority ga : authorities) {
-               if (full.equals(ga.getAuthority())) return true;
-            }
-        }
-        return false;
     }
 
     private User currentUser() {

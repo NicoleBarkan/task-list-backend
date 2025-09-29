@@ -4,12 +4,12 @@ import com.tasklist.taskapi.dto.UserDto;
 import com.tasklist.taskapi.dto.UserMeDto;
 import com.tasklist.taskapi.model.Role;
 import com.tasklist.taskapi.model.User;
+import com.tasklist.taskapi.security.SecurityUtils;
 import com.tasklist.taskapi.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 
 import java.util.List;
 import java.util.Set;
@@ -35,8 +35,7 @@ public class UserController {
     var username = auth.getName();
     var dto = new UserMeDto();
     dto.username = username;
-    dto.role = auth.getAuthorities().stream()
-        .map(GrantedAuthority::getAuthority).map(r -> r.replaceFirst("^ROLE_", "")).toList();
+    dto.role = SecurityUtils.roleNames(auth, true);
 
     return userService.findByUsername(username)
         .map(u -> { dto.id = u.getId(); dto.firstName = u.getFirstName(); dto.lastName = u.getLastName();

@@ -18,7 +18,6 @@ public class TranslationController {
 
     @GetMapping(value = "/{lang}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String, Object>> getTranslations(@PathVariable String lang) {
-        // fallback на en, если файла нет
         String path = "i18n/" + lang + ".json";
         ClassPathResource res = new ClassPathResource(path);
         if (!res.exists()) {

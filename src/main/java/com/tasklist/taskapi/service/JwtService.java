@@ -6,11 +6,12 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+
+import com.tasklist.taskapi.security.SecurityUtils;
+
 import org.springframework.security.core.userdetails.User;
-import java.util.stream.Collectors;
 
 import java.security.Key;
 import java.util.Date;
@@ -78,15 +79,13 @@ public class JwtService {
     }
 
     public String generate(com.tasklist.taskapi.model.User u) {
-        var authorities = u.getRole().stream() 
-            .map(r -> r.name().startsWith("ROLE_") ? r.name() : "ROLE_" + r.name())
-            .map(SimpleGrantedAuthority::new)
-            .collect(Collectors.toSet());
+        var authorities = SecurityUtils.toAuthorities(u.getRole());
+        var roleNames = SecurityUtils.toRoleNames(u.getRole());
 
         var userDetails = new User(u.getUsername(), u.getPassword(), authorities);
 
         Map<String,Object> claims = Map.of(
-            "roles", authorities.stream().map(SimpleGrantedAuthority::getAuthority).toList(),
+            "roles", roleNames,
             "uid", u.getId()
         );
 
