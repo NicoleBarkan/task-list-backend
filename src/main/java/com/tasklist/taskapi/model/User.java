@@ -36,4 +36,20 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
     private Set<Role> role = new HashSet<>();
+
+    public String getUsername() { return username; }
+    public void setUsername(String username) { this.username = username; }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "group_id")
+    private Group group;
+
+        
+    public Group getGroup() { 
+        return group; 
+    }
+
+    public void setGroup(Group group) { 
+        this.group = group; 
+    }
 }

@@ -1,5 +1,6 @@
 package com.tasklist.taskapi.service;
 
+import com.tasklist.taskapi.dto.TaskDto;
 import com.tasklist.taskapi.model.Task;
 
 import java.util.List;
@@ -12,4 +13,6 @@ public interface TaskService {
     Optional<Task> updateTask(Long id, Task updatedTask);
     void deleteTask(Long id);
     Optional<Task> getTaskById(Long id);
+    List<TaskDto> list();
+    List<TaskDto> listByGroup(Long groupId);
 }

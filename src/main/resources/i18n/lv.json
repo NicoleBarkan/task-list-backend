@@ -23,6 +23,7 @@
       "DESCRIPTION_PLACEHOLDER": "Ievadiet uzdevuma aprakstu",
       "ASSIGNED_TO": "Piešķirts",
       "UNASSIGNED": "Nav piešķirts",
+      "GROUP": "Grupa",
       "TYPE": "Uzdevuma tips",
       "STATUS": "Uzdevuma statuss",
       "CANCEL": "Atcelt",
@@ -33,7 +34,8 @@
         "TITLE_MAXLENGTH": "Maksimāli 50 rakstzīmes",
         "DESCRIPTION_MAXLENGTH": "Maksimāli 200 rakstzīmes",
         "TYPE_REQUIRED": "Tips ir obligāts",
-        "STATUS_REQUIRED": "Statuss ir obligāts"
+        "STATUS_REQUIRED": "Statuss ir obligāts",
+        "GROUP_REQUIRED": "Grupa ir obligāta"
       }
     },
     "TYPES": {
@@ -73,11 +75,12 @@
   "TASK": {
     "DETAILS": {
       "DESCRIPTION": "Apraksts",
-      "NO_DESCRIPTION": "Apraksts nav pieejams.",
+      "NO_DESCRIPTION": "Vēl nav apraksta.",
       "ASSIGNED_TO": "Piešķirts",
       "ASSIGNED_LABEL": "Piešķirts lietotājs",
       "SELECT_USER": "Izvēlieties lietotāju",
       "UNASSIGNED": "Nav piešķirts",
+      "GROUP": "Grupa",
       "DATES": "Datumi",
       "CREATED": "Izveidots",
       "UPDATED": "Atjaunināts",
@@ -90,9 +93,10 @@
     "LOGOUT": "Iziet",
     "CREATE": "Jauns Uzdevums",
     "VIEW_USERS": "Lietotāji",
+    "GROUPS": "Grupas",
     "EDIT": "Rediģēt",
     "DELETE": "Dzēst",
-    "NO_DESCRIPTION": "Apraksts nav pieejams.",
+    "NO_DESCRIPTION": "Vēl nav apraksta.",
     "NO_TASKS": "Vēl nav neviena uzdevuma"
   },
   "USER_DETAILS": {
@@ -104,6 +108,55 @@
   "USER_LIST": {
     "TITLE": "Lietotāji",
     "BACK_TO_TASKS": "Atpakaļ uz Uzdevuma Sarakstu",
-    "VIEW_DETAILS": "Skatīt detaļas"
+    "VIEW_DETAILS": "Skatīt detaļas",
+    "CURRENT_GROUP": "Grupa",
+    "CHANGE_GROUP": "Piešķirt grupai"
+  },
+  "GROUP_LIST": {
+    "TITLE": "Grupas",
+    "CREATE": "Jauna grupa",
+    "FILTER": "Filtrs",
+    "SEARCH_PLACEHOLDER": "Meklēt pēc nosaukuma/apraksta",
+    "EDIT": "Rediģēt",
+    "DELETE": "Dzēst",
+    "NO_DESCRIPTION": "Vēl nav apraksta."
+  },
+    "GROUP_EDIT": {
+    "NAME": "Nosaukums",
+    "DESCRIPTION": "Apraksts",
+    "CREATE": "Izveidot grupu",
+    "EDIT": "Rediģēt grupu",
+    "CREATE_NEW": "Izveidot",
+    "SAVE": "Saglabāt",
+    "CANCEL": "Atcelt",
+    "ERRORS": {
+      "REQUIRED_NAME": "Lūdzu norādiet nosaukumu",
+      "NAME_TOO_LONG": "Nosaukums ir pārāk garš",
+      "DESC_TOO_LONG": "Apraksts ir pārāk garš"
+    }
+  },
+  "GROUP_DETAILS": {
+    "BACK": "Atpakaļ uz grupām",
+    "NAME": "Grupas nosaukums",
+    "DESCRIPTION": "Apraksts",
+    "NO_DESCRIPTION": "Apraksts nav pievienots",
+    "TASKS_TITLE": "Uzdevumi šajā grupā",
+    "USERS_TITLE": "Lietotāji šajā grupā",
+    "NO_TASKS": "Šajā grupā nav neviena uzdevuma"
+  },
+  "USERS": {
+    "IN_GROUP_TITLE": "Lietotāji šajā grupā",
+    "USERNAME": "Lietotājvārds",
+    "FIRSTNAME": "Vārds",
+    "LASTNAME": "Uzvārds",
+    "ROLES": "Lomas",
+    "NO_USERS": "Šajā grupā nav lietotāju"
+  },
+  "TASKS": {
+    "TITLE": "Nosaukums",
+    "TYPE": "Tips",
+    "STATUS": "Statuss",
+    "ASSIGNED_TO": "Piešķirts",
+    "UPDATED_ON": "Pēdējoreiz atjaunots"
   }
 }
