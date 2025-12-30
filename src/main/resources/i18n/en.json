@@ -1,6 +1,49 @@
 {
-  "APP": {
-    "LANGUAGE": "Language"
+  "APP": { "LANGUAGE": "Language" },
+  "NAV": {
+    "LOGIN": "Login",
+    "REGISTER": "Register",
+    "LOGOUT": "Logout",
+    "GREETING": "Hello",
+    "TASKS": "Tasks",
+    "USERS": "Users",
+    "GROUPS": "Groups",
+    "TASK_GROUPS_ROLES": "Tasks • Groups • Roles"
+  },
+  "WELCOME": {
+    "PILL": "Role-based access • Groups • Task statuses",
+    "TITLE_1": "Manage tasks clearly.",
+    "TITLE_2": "Work faster",
+    "TITLE_3": "with your team.",
+    "SUBTITLE": "Create tasks, track progress, assign users, and organize everything by groups. Simple UI, clear permissions, and structured workflow.",
+    "STATUSES": {
+      "TITLE": "Statuses",
+      "VALUES": "OPEN • IN_PROGRESS • DONE"
+    },
+    "TYPES": {
+      "TITLE": "Types",
+      "VALUES": "EPIC • STORY • TASK • SUBTASK • BUG"
+    },
+    "ROLES": {
+      "TITLE": "Roles",
+      "VALUES": "ADMIN • MANAGER • USER"
+    },
+    "FEATURES": {
+      "TITLE": "What you can do",
+      "SUBTITLE": "Clean workflow with the essentials — no clutter.",
+      "TASKS": {
+        "TITLE": "Task lifecycle",
+        "TEXT": "Create, update, and track tasks with clear status and type."
+      },
+      "GROUPS": {
+        "TITLE": "Groups & assignment",
+        "TEXT": "Organize users by groups and assign tasks to responsible users."
+      },
+      "ROLES": {
+        "TITLE": "Roles & access",
+        "TEXT": "Admin, Manager and User permissions protect actions and data."
+      }
+    }
   },
   "LOGIN": {
     "TITLE": "Login",
@@ -11,7 +54,9 @@
     "PASSWORD_PLACEHOLDER": "Enter your password",
     "PASSWORD_REQUIRED": "Password is required",
     "SUBMIT_BUTTON": "Login",
-    "REGISTER_LINK": "Don't have an account? Register"
+    "REGISTER_LINK": "Don't have an account? Register",
+    "LOGIN_LINK": "Have an account? Login",
+    "INVALID_CREDENTIALS": "Invalid username or password"
   },
   "CREATE": {
     "FORM": {
@@ -27,12 +72,11 @@
       "TYPE": "Task Type",
       "STATUS": "Task Status",
       "CANCEL": "Cancel",
-      "SAVE": "Save Task",
+      "SAVE": "Save",
       "ERRORS": {
         "TITLE_REQUIRED": "Title is required",
-        "TITLE_MINLENGTH": "Minimum 4 characters required",
-        "TITLE_MAXLENGTH": "Maximum 50 characters allowed",
-        "DESCRIPTION_MAXLENGTH": "Maximum 200 characters allowed",
+        "TITLE_MAXLENGTH": "The title must not exceed 50 characters",
+        "DESCRIPTION_MAXLENGTH": "The description must not exceed 2000 characters",
         "TYPE_REQUIRED": "Type is required",
         "STATUS_REQUIRED": "Status is required",
         "GROUP_REQUIRED": "Group is required"
@@ -67,10 +111,14 @@
       "FIRST_NAME_REQUIRED": "First name is required",
       "LAST_NAME_REQUIRED": "Last name is required",
       "USERNAME_REQUIRED": "Username is required",
+      "USERNAME_MINLENGTH": "Username must be at least 5 characters",
+      "USERNAME_MAXLENGTH": "The username must not exceed 50 characters",
       "PASSWORD_REQUIRED": "Password is required",
-      "PASSWORD_MINLENGTH": "Password must be at least 6 characters"
+      "PASSWORD_MINLENGTH": "Password must be at least 6 characters",
+      "PASSWORD_MAXLENGTH": "The password must not exceed 50 characters"
     },
-    "SUBMIT": "Register"
+    "SUBMIT": "Register",
+    "REGISTRATION_FAILED": "Username already taken. Please choose another one."
   },
   "TASK": {
     "DETAILS": {
@@ -91,7 +139,8 @@
   "TASK_LIST": {
     "GREETING": "Welcome",
     "LOGOUT": "Logout",
-    "CREATE": "Create New Task",
+    "TASKS": "Tasks",
+    "CREATE": "New Task",
     "VIEW_USERS": "View Users",
     "GROUPS": "Groups",
     "EDIT": "Edit",
@@ -108,21 +157,19 @@
   "USER_LIST": {
     "TITLE": "Users",
     "BACK_TO_TASKS": "Back to tasks",
-    "VIEW_DETAILS": "View details",
+    "VIEW_DETAILS": "Change roles",
     "CURRENT_GROUP": "Group",
     "CHANGE_GROUP": "Assign to group"
   },
   "GROUP_LIST": {
     "TITLE": "Groups",
     "CREATE": "New Group",
-    "FILTER": "Filter",
-    "SEARCH_PLACEHOLDER": "Search by title/description",
     "EDIT": "Edit",
     "DELETE": "Delete",
     "NO_DESCRIPTION": "No description provided."
   },
   "GROUP_EDIT": {
-    "NAME": "Name",
+    "NAME": "Title",
     "DESCRIPTION": "Description",
     "CREATE": "Create Group",
     "EDIT": "Edit Group",
@@ -130,19 +177,19 @@
     "SAVE": "Save",
     "CANCEL": "Cancel",
     "ERRORS": {
-      "REQUIRED_NAME": "Please enter a name",
-      "NAME_TOO_LONG": "Name is too long",
-      "DESC_TOO_LONG": "Description is too long"
+      "REQUIRED_NAME": "Title is required",
+      "NAME_TOO_LONG": "Name  must not exceed 50 characters",
+      "DESC_TOO_LONG": "Description  must not exceed 2000 characters"
     }
   },
   "GROUP_DETAILS": {
     "BACK": "Back to groups",
-    "NAME": "Group name",
+    "NAME": "Group title",
     "DESCRIPTION": "Description",
     "NO_DESCRIPTION": "No description provided",
     "TASKS_TITLE": "Tasks in this group",
     "USERS_TITLE": "Users in this group",
-    "NO_TASKS": "No tasks found in this group"
+    "NO_TASKS": "No tasks in this group"
   },
     "USERS": {
     "IN_GROUP_TITLE": "Users in this group",

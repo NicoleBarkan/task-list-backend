@@ -1,9 +1,7 @@
 package com.tasklist.taskapi.dto;
-
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 import com.tasklist.taskapi.model.Task;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 public record TaskDto(
     Long id,
@@ -11,16 +9,12 @@ public record TaskDto(
     String description,
     String type,
     String status,
-    @JsonProperty("createdOn")  LocalDateTime createdOn,
-    @JsonProperty("updatedOn")  LocalDateTime updatedOn,
-    @JsonProperty("assignedTo") Long assignedTo,
+    Instant createdOn,
+    Instant updatedOn,
+    Long assignedTo,
     String assignedToName,
     Long groupId
 ) {
-    public static TaskDto from(Task t) {
-        return from(t, null);
-    }
-
     public static TaskDto from(Task t, String assignedToName) {
         return new TaskDto(
             t.getId(),
@@ -30,7 +24,7 @@ public record TaskDto(
             t.getStatus() != null ? t.getStatus().name() : null,
             t.getCreatedOn(),
             t.getUpdatedOn(),
-            t.getAssignedTo(),
+            t.getAssignedTo() != null ? t.getAssignedTo().getId() : null,
             assignedToName,
             t.getGroup() != null ? t.getGroup().getId() : null
         );

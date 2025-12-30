@@ -1,5 +1,6 @@
 package com.tasklist.taskapi.service.impl;
 
+import com.tasklist.taskapi.config.GroupConstants;
 import com.tasklist.taskapi.dto.GroupDto;
 import com.tasklist.taskapi.model.Group;
 import com.tasklist.taskapi.repository.GroupRepository;
@@ -18,7 +19,7 @@ public class GroupServiceImpl implements GroupService {
     private final UserRepository userRepo;
     private final TaskRepository taskRepo;
 
-    private final Long defaultGroupId = 1L;
+    private final Long defaultGroupId = GroupConstants.UNASSIGNED_GROUP_ID;
 
     public GroupServiceImpl(
             GroupRepository repo,
@@ -33,24 +34,23 @@ public class GroupServiceImpl implements GroupService {
     private GroupDto toDto(Group g) {
         GroupDto dto = new GroupDto();
         dto.id = g.getId();
-        dto.name = g.getName();
+        dto.title = g.getTitle();
         dto.description = g.getDescription();
         return dto;
     }
 
     private Group fromDto(GroupDto dto) {
         Group g = new Group();
-        g.setId(dto.id);
-        g.setName(dto.name);
+        g.setTitle(dto.title);
         g.setDescription(dto.description);
         return g;
     }
 
     @Override
     public GroupDto create(GroupDto dto) {
-        String name = dto.name == null ? "" : dto.name.trim();
-        if (name.isEmpty()) throw new IllegalArgumentException("Group name must not be blank");
-        if (repo.existsByName(name)) throw new IllegalArgumentException("Group name already exists: " + name);
+        String title = dto.title == null ? "" : dto.title.trim();
+        if (title.isEmpty()) throw new IllegalArgumentException("Group title must not be blank");
+        if (repo.existsByTitle(title)) throw new IllegalArgumentException("Group title already exists: " + title);
 
         Group saved = repo.save(fromDto(dto));
         return toDto(saved);
@@ -60,12 +60,15 @@ public class GroupServiceImpl implements GroupService {
     public GroupDto update(Long id, GroupDto dto) {
         Group existing = repo.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Group not found: " + id));
-        String name = dto.name == null ? "" : dto.name.trim();
-        if (name.isEmpty()) throw new IllegalArgumentException("Group name must not be blank");
-        if (!existing.getName().equalsIgnoreCase(name) && repo.existsByName(name)) {
-            throw new IllegalArgumentException("Group name already exists: " + name);
+
+        String title = dto.title == null ? "" : dto.title.trim();
+        if (title.isEmpty()) throw new IllegalArgumentException("Group title must not be blank");
+
+        if (!existing.getTitle().equalsIgnoreCase(title) && repo.existsByTitle(title)) {
+            throw new IllegalArgumentException("Group title already exists: " + title);
         }
-        existing.setName(name);
+
+        existing.setTitle(title);
         existing.setDescription(dto.description);
         return toDto(repo.save(existing));
     }
@@ -73,12 +76,12 @@ public class GroupServiceImpl implements GroupService {
     @Transactional
     @Override
     public void delete(Long id) {
-    if (Objects.equals(id, defaultGroupId)) {
-        throw new IllegalArgumentException("Cannot delete default group");
-    }
-    if (userRepo.existsByGroupId(id) || taskRepo.existsByGroupId(id)) {
-        throw new IllegalArgumentException("The group contains users/tasks, deletion is prohibited");
-    }
+        if (Objects.equals(id, defaultGroupId)) {
+            throw new IllegalArgumentException("Cannot delete default group");
+        }
+        if (userRepo.existsByGroupId(id) || taskRepo.existsByGroupId(id)) {
+            throw new IllegalArgumentException("The group contains users/tasks, deletion is prohibited");
+        }
         repo.deleteById(id);
     }
 

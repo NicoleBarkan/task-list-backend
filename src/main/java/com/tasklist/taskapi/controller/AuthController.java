@@ -40,7 +40,7 @@ public class AuthController {
                 : userRepository.findByUsernameIgnoreCase(username).orElse(null);
 
         if (user == null || rawPassword == null || !passwordEncoder.matches(rawPassword, user.getPassword())) {
-            throw new IllegalArgumentException("Invalid username or password");
+            throw new IllegalArgumentException("LOGIN.INVALID_CREDENTIALS");
         }
 
         String token = jwtService.generate(user); 
@@ -58,7 +58,7 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequestDto request) {
         if (userRepository.findByUsernameIgnoreCase(request.username).isPresent()) {
-            throw new IllegalArgumentException("Username already taken. Choose another one.");
+            throw new IllegalArgumentException("REGISTER.REGISTRATION_FAILED");
         }
 
         User saved = userService.registerUser(request);

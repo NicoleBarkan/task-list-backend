@@ -1,6 +1,49 @@
 {
-  "APP": {
-    "LANGUAGE": "Valoda"
+  "APP": { "LANGUAGE": "Valoda" },
+  "NAV": {
+    "LOGIN": "Pieslēgties",
+    "REGISTER": "Reģistrēties",
+    "LOGOUT": "Izrakstīties",
+    "GREETING": "Sveiki",
+    "TASKS": "Uzdevumi",
+    "USERS": "Lietotāji",
+    "GROUPS": "Grupas",
+    "TASK_GROUPS_ROLES": "Uzdevumi • Grupas • Lomas"
+  },
+  "WELCOME": {
+    "PILL": "Piekļuve pēc lomām • Grupas • Uzdevumu statusi",
+    "TITLE_1": "Pārvaldi uzdevumus skaidri.",
+    "TITLE_2": "Strādā ātrāk",
+    "TITLE_3": "kopā ar savu komandu.",
+    "SUBTITLE": "Izveido uzdevumus, seko progresam, piešķir lietotājus un organizē visu grupās. Vienkāršs interfeiss, skaidras tiesības un strukturēta darba plūsma.",
+    "STATUSES": {
+      "TITLE": "Statusi",
+      "VALUES": "OPEN • IN_PROGRESS • DONE"
+    },
+    "TYPES": {
+      "TITLE": "Tipi",
+      "VALUES": "EPIC • STORY • TASK • SUBTASK • BUG"
+    },
+    "ROLES": {
+      "TITLE": "Lomas",
+      "VALUES": "ADMIN • MANAGER • USER"
+    },
+    "FEATURES": {
+      "TITLE": "Ko tu vari darīt",
+      "SUBTITLE": "Tīra darba plūsma ar būtiskāko — bez liekā.",
+      "TASKS": {
+        "TITLE": "Uzdevumu cikls",
+        "TEXT": "Izveido, atjauno un seko uzdevumiem ar skaidru statusu un veidu."
+      },
+      "GROUPS": {
+        "TITLE": "Grupas un piešķiršana",
+        "TEXT": "Organizē lietotājus grupās un piešķir uzdevumus atbildīgajiem."
+      },
+      "ROLES": {
+        "TITLE": "Lomas un piekļuve",
+        "TEXT": "Administratora, menedžera un lietotāja tiesības aizsargā darbības un datus."
+      }
+    }
   },
   "LOGIN": {
     "TITLE": "Pieslēgties",
@@ -11,7 +54,9 @@
     "PASSWORD_PLACEHOLDER": "Ievadiet paroli",
     "PASSWORD_REQUIRED": "Parole ir obligāta",
     "SUBMIT_BUTTON": "Pieslēgties",
-    "REGISTER_LINK": "Nav konta? Reģistrējies"
+    "REGISTER_LINK": "Nav konta? Reģistrējies",
+    "LOGIN_LINK": "Ir konts? Pieslēdzies",
+    "INVALID_CREDENTIALS": "Nepareizs lietotājvārds vai parole"
   },
   "CREATE": {
     "FORM": {
@@ -19,7 +64,7 @@
       "UPDATE": "Rediģēt uzdevumu",
       "TITLE_LABEL": "Uzdevuma nosaukums",
       "TITLE_PLACEHOLDER": "Ievadiet uzdevuma nosaukumu",
-      "DESCRIPTION_LABEL": "Uzdevuma apraksts (nav obligāti)",
+      "DESCRIPTION_LABEL": "Uzdevuma apraksts (nav obligāts)",
       "DESCRIPTION_PLACEHOLDER": "Ievadiet uzdevuma aprakstu",
       "ASSIGNED_TO": "Piešķirts",
       "UNASSIGNED": "Nav piešķirts",
@@ -27,12 +72,11 @@
       "TYPE": "Uzdevuma tips",
       "STATUS": "Uzdevuma statuss",
       "CANCEL": "Atcelt",
-      "SAVE": "Saglabāt uzdevumu",
+      "SAVE": "Saglabāt",
       "ERRORS": {
         "TITLE_REQUIRED": "Nosaukums ir obligāts",
-        "TITLE_MINLENGTH": "Minimāli 4 rakstzīmes",
-        "TITLE_MAXLENGTH": "Maksimāli 50 rakstzīmes",
-        "DESCRIPTION_MAXLENGTH": "Maksimāli 200 rakstzīmes",
+        "TITLE_MAXLENGTH": "Nosaukums nedrīkst pārsniegt 50 rakstzīmes",
+        "DESCRIPTION_MAXLENGTH": "Apraksts nedrīkst pārsniegt 50 rakstzīmes",
         "TYPE_REQUIRED": "Tips ir obligāts",
         "STATUS_REQUIRED": "Statuss ir obligāts",
         "GROUP_REQUIRED": "Grupa ir obligāta"
@@ -67,10 +111,14 @@
       "FIRST_NAME_REQUIRED": "Vārds ir obligāts",
       "LAST_NAME_REQUIRED": "Uzvārds ir obligāts",
       "USERNAME_REQUIRED": "Lietotājvārds ir obligāts",
+      "USERNAME_MINLENGTH": "Lietotājvārdam jābūt vismaz 5 rakstzīmēm garam",
+      "USERNAME_MAXLENGTH": "Lietotājvārds nedrīkst pārsniegt 50 rakstzīmes",
       "PASSWORD_REQUIRED": "Parole ir obligāta",
-      "PASSWORD_MINLENGTH": "Parolei jābūt vismaz 6 rakstzīmēm"
+      "PASSWORD_MINLENGTH": "Parolei jābūt vismaz 6 rakstzīmes garai",
+      "PASSWORD_MAXLENGTH": "Parole nedrīkst pārsniegt 50 rakstzīmes"
     },
-    "SUBMIT": "Reģistrēties"
+    "SUBMIT": "Reģistrēties",
+    "REGISTRATION_FAILED": "Lietotājvārds jau tiek izmantots. Lūdzu, izvēlieties citu."
   },
   "TASK": {
     "DETAILS": {
@@ -91,6 +139,7 @@
   "TASK_LIST": {
     "GREETING": "Sveicināts",
     "LOGOUT": "Iziet",
+    "TASKS": "Uzdevumi",
     "CREATE": "Jauns Uzdevums",
     "VIEW_USERS": "Lietotāji",
     "GROUPS": "Grupas",
@@ -108,15 +157,13 @@
   "USER_LIST": {
     "TITLE": "Lietotāji",
     "BACK_TO_TASKS": "Atpakaļ uz Uzdevuma Sarakstu",
-    "VIEW_DETAILS": "Skatīt detaļas",
+    "VIEW_DETAILS": "Manīt lomas",
     "CURRENT_GROUP": "Grupa",
     "CHANGE_GROUP": "Piešķirt grupai"
   },
   "GROUP_LIST": {
     "TITLE": "Grupas",
     "CREATE": "Jauna grupa",
-    "FILTER": "Filtrs",
-    "SEARCH_PLACEHOLDER": "Meklēt pēc nosaukuma/apraksta",
     "EDIT": "Rediģēt",
     "DELETE": "Dzēst",
     "NO_DESCRIPTION": "Vēl nav apraksta."
@@ -130,9 +177,9 @@
     "SAVE": "Saglabāt",
     "CANCEL": "Atcelt",
     "ERRORS": {
-      "REQUIRED_NAME": "Lūdzu norādiet nosaukumu",
-      "NAME_TOO_LONG": "Nosaukums ir pārāk garš",
-      "DESC_TOO_LONG": "Apraksts ir pārāk garš"
+      "REQUIRED_NAME": "Nosaukums ir obligāts",
+      "NAME_TOO_LONG": "Nosaukums nedrīkst pārsniegt 50 rakstzīmes",
+      "DESC_TOO_LONG": "Apraksts nedrīkst pārsniegt 2000 rakstzīmes"
     }
   },
   "GROUP_DETAILS": {

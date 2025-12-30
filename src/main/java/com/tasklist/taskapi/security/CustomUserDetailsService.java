@@ -13,7 +13,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User u = users.findByUsername(username)
+        User u = users.findByUsernameIgnoreCase(username)
             .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
 
         var authorities = SecurityUtils.toAuthorities(u.getRole());

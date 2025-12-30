@@ -3,7 +3,9 @@ package com.tasklist.taskapi.controller;
 import com.tasklist.taskapi.dto.UserDto;
 import com.tasklist.taskapi.dto.UserMeDto;
 import com.tasklist.taskapi.model.Role;
+import com.tasklist.taskapi.model.RoleEntity;
 import com.tasklist.taskapi.model.User;
+import com.tasklist.taskapi.repository.RoleRepository;
 import com.tasklist.taskapi.security.SecurityUtils;
 import com.tasklist.taskapi.service.UserService;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +21,11 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/users")
 public class UserController {
     private final UserService userService;
-    public UserController(UserService userService) { this.userService = userService; }
+    private final RoleRepository roleRepo;
+    public UserController(UserService userService, RoleRepository roleRepo) {
+        this.userService = userService;
+        this.roleRepo = roleRepo;
+    }
 
     @GetMapping
     public List<UserDto> getUsers(@RequestParam(name = "groupId", required = false) Long groupId) {
@@ -55,10 +61,20 @@ public class UserController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}/role")
-    public ResponseEntity<UserDto> updateRole(@PathVariable Long id, @RequestBody Set<Role> newRole) {
+    public ResponseEntity<UserDto> updateRole(@PathVariable Long id,
+                                            @RequestBody(required = false) Set<Role> newRole) {
         return userService.getUserById(id).map(user -> {
-            newRole.add(Role.USER);
-            user.setRole(newRole);
+
+            Set<Role> safe = (newRole == null) ? new java.util.HashSet<>() : new java.util.HashSet<>(newRole);
+            safe.add(Role.USER);
+
+            Set<RoleEntity> roleEntities = safe.stream()
+                    .map(r -> roleRepo.findByName(r)
+                            .orElseThrow(() -> new IllegalStateException("Role not found in DB: " + r)))
+                    .collect(Collectors.toSet());
+
+            user.setRoles(roleEntities);
+
             User saved = userService.saveUser(user);
             return ResponseEntity.ok(UserDto.from(saved));
         }).orElse(ResponseEntity.notFound().build());
@@ -75,39 +91,51 @@ public class UserController {
 
     @PreAuthorize("hasAnyRole('ADMIN','MANAGER') or @userSecurity.isSelf(authentication, #id)")
     @PutMapping("/{id}")
-    public ResponseEntity<UserDto> updateUser(
-            @PathVariable Long id,
-            @RequestBody UserDto payload
-    ) {
-        return userService.getUserById(id).map(user -> {
-            if (payload.username() != null && !payload.username().isBlank()) {
-                user.setUsername(payload.username().trim());
-            }
-            if (payload.password() != null && !payload.password().isBlank()) {
-                userService.encodeAndSetPassword(user, payload.password());
-            }
+    public ResponseEntity<UserDto> updateUser(@PathVariable Long id, @RequestBody UserDto payload) {
 
+        var opt = userService.getUserById(id);
+        if (opt.isEmpty()) return ResponseEntity.notFound().build();
+
+        User user = opt.get();
+
+        if (payload.username() != null && !payload.username().isBlank()) {
+            user.setUsername(payload.username().trim());
+        }
+        if (payload.password() != null && !payload.password().isBlank()) {
+            userService.encodeAndSetPassword(user, payload.password());
+        }
+
+        boolean canChangeRole = org.springframework.security.core.context.SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getAuthorities()
+                .stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN") || a.getAuthority().equals("ROLE_MANAGER"));
+
+        if (canChangeRole && payload.role() != null && !payload.role().isEmpty()) {
             try {
-                boolean canChangeRole = org.springframework.security.core.context.SecurityContextHolder
-                        .getContext()
-                        .getAuthentication()
-                        .getAuthorities()
-                        .stream()
-                        .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN") || a.getAuthority().equals("ROLE_MANAGER"));
-                if (canChangeRole && payload.role() != null && !payload.role().isEmpty()) {
-                    Set<Role> roles = payload.role().stream()
-                            .map(Role::valueOf)
-                            .collect(Collectors.toSet());
-                    roles.add(Role.USER);
-                    user.setRole(roles);
-                }
-            } catch (Exception ignored) {}
+                Set<Role> roleEnums = payload.role().stream()
+                        .filter(s -> s != null && !s.isBlank())
+                        .map(s -> Role.valueOf(s.trim().toUpperCase()))
+                        .collect(Collectors.toSet());
 
-            User saved = userService.saveUser(user);
-            return ResponseEntity.ok(UserDto.from(saved));
-        }).orElse(ResponseEntity.notFound().build());
+                roleEnums.add(Role.USER);
+
+                Set<RoleEntity> roleEntities = roleEnums.stream()
+                        .map(r -> roleRepo.findByName(r)
+                                .orElseThrow(() -> new IllegalStateException("Role not found in DB: " + r)))
+                        .collect(Collectors.toSet());
+
+                user.setRoles(roleEntities);
+
+            } catch (IllegalArgumentException ex) {
+                return ResponseEntity.badRequest().build();
+            }
+        }
+
+        User saved = userService.saveUser(user);
+        return ResponseEntity.ok(UserDto.from(saved));
     }
-
 
     @PreAuthorize("hasRole('ADMIN') or @userSecurity.isSelf(authentication, #id)")
     @DeleteMapping("/{id}")

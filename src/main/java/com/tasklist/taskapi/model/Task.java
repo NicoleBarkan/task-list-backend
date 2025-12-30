@@ -1,19 +1,19 @@
 package com.tasklist.taskapi.model;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Entity
+@Table(name = "tasks")
 public class Task {
-
-    public static final long UNASSIGNED = -1L;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, length = 50)
     private String title;
 
+    @Column(length = 2000)
     private String description;
 
     @Enumerated(EnumType.STRING)
@@ -22,110 +22,59 @@ public class Task {
     @Enumerated(EnumType.STRING)
     private TaskStatus status;
 
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime createdOn;
-
-    @Column(nullable = true)
-    private LocalDateTime updatedOn;
+    private Instant createdOn;
+    private Instant updatedOn;
 
     @PrePersist
     void onCreate() {
-        if (this.createdOn == null) {
-            this.createdOn = LocalDateTime.now();
-        }
+        if (this.createdOn == null) this.createdOn = Instant.now();
     }
 
     @PreUpdate
-    void onUpdate() {
-        this.updatedOn = LocalDateTime.now();
-    }
+    void onUpdate() { this.updatedOn = Instant.now(); }
 
-    @Column(name = "assigned_to")
-    private Long assignedTo = UNASSIGNED;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User assignedTo;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id", nullable = false)
     private Group group;
 
-    public Task() {}
+    protected Task() {}
 
-    public Task(String title, String description, TaskType type, TaskStatus status, LocalDateTime createdOn) {
+    public Task(String title, String description, TaskType type, TaskStatus status, Group group) {
         this.title = title;
         this.description = description;
         this.type = type;
         this.status = status;
-        this.assignedTo = UNASSIGNED;
+        this.group = group;
     }
 
-    public Long getId() {
-        return id;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public String getTitle() { return title; }
+    public void setTitle(String title) { this.title = title; }
 
-    public String getTitle() {
-        return title;
-    }
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+    public TaskType getType() { return type; }
+    public void setType(TaskType type) { this.type = type; }
 
-    public String getDescription() {
-        return description;
-    }
+    public TaskStatus getStatus() { return status; }
+    public void setStatus(TaskStatus status) { this.status = status; }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    public Instant getCreatedOn() { return createdOn; }
+    public void setCreatedOn(Instant createdOn) { this.createdOn = createdOn; }
 
-    public TaskType getType() {
-        return type;
-    }
+    public Instant getUpdatedOn() { return updatedOn; }
+    public void setUpdatedOn(Instant updatedOn) { this.updatedOn = updatedOn; }
 
-    public void setType(TaskType type) {
-        this.type = type;
-    }
+    public User getAssignedTo() { return assignedTo; }
+    public void setAssignedTo(User assignedTo) { this.assignedTo = assignedTo; }
 
-    public TaskStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(TaskStatus status) {
-        this.status = status;
-    }
-
-    public LocalDateTime getCreatedOn() {
-        return createdOn;
-    }
-
-    public void setCreatedOn(LocalDateTime createdOn) {
-        this.createdOn = createdOn;
-    }
-
-    public LocalDateTime getUpdatedOn() {
-        return updatedOn;
-    }
-
-    public void setUpdatedOn(LocalDateTime updatedOn) {
-        this.updatedOn = updatedOn;
-    }
-
-    public Long getAssignedTo() {
-        return assignedTo;
-    }
-
-    public void setAssignedTo(Long assignedTo) {
-        this.assignedTo = assignedTo;
-    }
-    
-    public Group getGroup() { 
-        return group; 
-    }
-
-    public void setGroup(Group group) { 
-        this.group = group; 
-    }
+    public Group getGroup() { return group; }
+    public void setGroup(Group group) { this.group = group; }
 }
