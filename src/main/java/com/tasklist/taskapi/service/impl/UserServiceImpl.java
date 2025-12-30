@@ -5,27 +5,35 @@ import com.tasklist.taskapi.dto.RegisterRequestDto;
 import com.tasklist.taskapi.model.Role;
 import com.tasklist.taskapi.model.Group;
 import com.tasklist.taskapi.repository.GroupRepository;
+import com.tasklist.taskapi.repository.RoleRepository;
 import com.tasklist.taskapi.repository.UserRepository;
+import com.tasklist.taskapi.repository.TaskRepository;
 import com.tasklist.taskapi.service.UserService;
 import org.springframework.transaction.annotation.Transactional;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
+    private static final long UNASSIGNED_GROUP_ID = 1L;
+
+    private final TaskRepository taskRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final GroupRepository groupRepository; 
+    private final RoleRepository roleRepository;
 
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, GroupRepository groupRepository) {
+    public UserServiceImpl(TaskRepository taskRepository, UserRepository userRepository, PasswordEncoder passwordEncoder, GroupRepository groupRepository, RoleRepository roleRepository) {
+        this.taskRepository = taskRepository;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.groupRepository = groupRepository;
+        this.roleRepository = roleRepository;
     }
 
     @Override
@@ -68,10 +76,14 @@ public class UserServiceImpl implements UserService {
         user.setFirstName(firstName);
         user.setLastName(lastName);
 
-        if (user.getRole() == null) {
-            user.setRole(new HashSet<>()); 
-        }
-        user.getRole().add(Role.USER); 
+        var userRole = roleRepository.findByName(Role.USER).orElseThrow(() -> new IllegalStateException("Role not found in DB: USER"));
+
+        user.getRoles().clear();
+        user.addRole(userRole);
+
+        Group unassigned = groupRepository.findById(UNASSIGNED_GROUP_ID)
+                .orElseThrow(() -> new IllegalStateException("Default group (Unassigned tasks) not found"));
+        user.setGroup(unassigned);
 
         return userRepository.save(user);
     }
@@ -93,7 +105,15 @@ public class UserServiceImpl implements UserService {
 
         User user = userOpt.get();
         user.setGroup(group);
-        return Optional.of(userRepository.save(user));
+        User saved = userRepository.save(user);
+
+        if (Objects.equals(groupId, UNASSIGNED_GROUP_ID)) {
+            taskRepository.unassignTasksForUser(userId, groupId);
+        } else {
+            taskRepository.updateGroupForAssignedUserTasks(userId, groupId);
+        }
+
+        return Optional.of(saved);
     }
 
     @Override

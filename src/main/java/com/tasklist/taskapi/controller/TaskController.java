@@ -1,7 +1,8 @@
 package com.tasklist.taskapi.controller;
 
+import com.tasklist.taskapi.dto.TaskCreateDto;
 import com.tasklist.taskapi.dto.TaskDto;
-import com.tasklist.taskapi.model.Task;
+import com.tasklist.taskapi.dto.TaskUpdateDto;
 import com.tasklist.taskapi.service.TaskService;
 import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -28,24 +29,21 @@ public class TaskController {
     @GetMapping("/{id}")
     public ResponseEntity<TaskDto> getById(@PathVariable Long id) {
         return taskService.getTaskById(id)
-                .map(TaskDto::from)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<TaskDto> create(@RequestBody Task task) {
-        var saved = taskService.addTask(task);
-        return ResponseEntity.status(HttpStatus.CREATED).body(TaskDto.from(saved));
+    public ResponseEntity<TaskDto> create(@RequestBody TaskCreateDto dto) {
+        TaskDto saved = taskService.addTask(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
     @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
     @PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<TaskDto> update(@PathVariable Long id, @RequestBody Task updated) {
-        updated.setId(id);
-        return taskService.updateTask(id, updated)
-                .map(TaskDto::from)
+    public ResponseEntity<TaskDto> update(@PathVariable Long id, @RequestBody TaskUpdateDto dto) {
+        return taskService.updateTask(id, dto)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
@@ -53,8 +51,8 @@ public class TaskController {
     @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        return taskService.getTaskById(id)
-                .map(t -> { taskService.deleteTask(id); return ResponseEntity.noContent().<Void>build(); })
-                .orElse(ResponseEntity.notFound().build());
+        boolean deleted = taskService.deleteTask(id);
+        return deleted ? ResponseEntity.noContent().build()
+                       : ResponseEntity.notFound().build();
     }
 }
